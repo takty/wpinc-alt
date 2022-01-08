@@ -12,9 +12,9 @@ namespace wpinc\robor;
 /**
  * Disable REST API for specific routes.
  *
- * @param array $permitted_routes Permitted routes. For example, array( 'oembed', 'contact-form-7' ).
+ * @param string[] $permitted_routes Permitted routes. For example, array( 'oembed', 'contact-form-7' ).
  */
-function disable_rest_api( $permitted_routes = array() ) {
+function disable_rest_api( array $permitted_routes = array() ) {
 	add_filter(
 		'rest_pre_dispatch',
 		function ( $result, $wp_rest_server, $request ) use ( $permitted_routes ) {

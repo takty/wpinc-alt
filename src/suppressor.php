@@ -12,7 +12,7 @@ namespace wpinc\robor;
 /**
  * Suppress output for head meta.
  *
- * @param bool $do_remove_feed_links (Optional) Whether or not remove feed links.
+ * @param bool $do_remove_feed_links (Optional) Whether feed links are removed.
  */
 function suppress_head_meta_output( bool $do_remove_feed_links = true ) {
 	if ( $do_remove_feed_links ) {
@@ -73,7 +73,7 @@ function suppress_version_output() {
 }
 
 /**
- * Callback function for 'wp_default_*' add_action.
+ * Callback function for 'wp_default_*' actions.
  *
  * @access private
  *
@@ -84,7 +84,7 @@ function _cb_wp_default__suppress_version_output( WP_Scripts $inst ) {
 }
 
 /**
- * Callback function for '*_loader_src' filter.
+ * Callback function for '*_loader_src' filters.
  *
  * @access private
  *

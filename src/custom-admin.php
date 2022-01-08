@@ -1,14 +1,17 @@
 <?php
 /**
- * Custom Admin Bar
+ * Customizing Admin Bar and Side Menu.
  *
  * @package Wpinc Robor
  * @author Takuto Yanagida
- * @version 2021-03-23
+ * @version 2022-01-08
  */
 
 namespace wpinc\robor;
 
+/**
+ * Remove WordPress logo icon.
+ */
 function remove_wp_logo() {
 	add_action(
 		'admin_bar_menu',
@@ -19,6 +22,9 @@ function remove_wp_logo() {
 	);
 }
 
+/**
+ * Remove the customize menu.
+ */
 function remove_customize_menu() {
 	add_action(
 		'admin_bar_menu',
@@ -50,24 +56,16 @@ function remove_customize_menu() {
 	);
 }
 
-function ensure_admin_side_bar_menu_area() {
+/**
+ * Customize the side menu order.
+ */
+function customize_side_menu_order() {
 	add_action(
 		'admin_menu',
 		function () {
 			global $menu;
-			$menu[19] = $menu[10];
+			$menu[19] = $menu[10];  // phpcs:ignore
 			unset( $menu[10] );
 		}
 	);
-}
-
-function update_reading_options() {
-	update_option( 'show_on_front', 'page' );
-	if ( empty( get_option( 'page_on_front' ) ) ) {
-		$pages = get_pages( array( 'sort_column' => 'post_id' ) );
-		if ( ! empty( $pages ) ) {
-			update_option( 'page_on_front', $pages[0]->ID );
-		}
-	}
-	update_option( 'page_for_posts', '' );
 }
