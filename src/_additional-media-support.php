@@ -2,16 +2,42 @@
 /**
  * Custom PDF Thumbnail
  *
- * @author Takuto Yanagida @ Space-Time Inc.
+ * @package Wpinc Robor
+ * @author Takuto Yanagida
  * @version 2021-03-23
  */
 
-namespace st\basic;
+namespace wpinc\robor;
+
+function enable_to_upload_svg() {
+	add_filter(
+		'ext2type',
+		function ( $ext2types ) {
+			array_push( $ext2types, array( 'image' => array( 'svg', 'svgz' ) ) );
+			return $ext2types;
+		}
+	);
+	add_filter(
+		'upload_mimes',
+		function ( $mimes ) {
+			$mimes['svg']  = 'image/svg+xml';
+			$mimes['svgz'] = 'image/svg+xml';
+			return $mimes;
+		}
+	);
+	add_filter(
+		'getimagesize_mimes_to_exts',
+		function ( $mime_to_ext ) {
+			$mime_to_ext['image/svg+xml'] = 'svg';
+			return $mime_to_ext;
+		}
+	);
+}
 
 function enable_pdf_thumbnail() {
-	add_filter( 'ajax_query_attachments_args', '\st\basic\cb_ajax_query_attachments_args', 11 );
-	add_action( 'admin_footer-post-new.php', '\st\basic\cb_override_attachment_filter' );
-	add_action( 'admin_footer-post.php', '\st\basic\cb_override_attachment_filter' );
+	add_filter( 'ajax_query_attachments_args', '\wpinc\robor\cb_ajax_query_attachments_args', 11 );
+	add_action( 'admin_footer-post-new.php', '\wpinc\robor\cb_override_attachment_filter' );
+	add_action( 'admin_footer-post.php', '\wpinc\robor\cb_override_attachment_filter' );
 }
 
 function cb_ajax_query_attachments_args( $query ) {
