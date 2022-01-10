@@ -4,7 +4,7 @@
  *
  * @package Wpinc Robor
  * @author Takuto Yanagida
- * @version 2022-01-08
+ * @version 2022-01-10
  */
 
 namespace wpinc\robor;
@@ -76,7 +76,7 @@ function disable_comment_feed() {
  * Disable comment menus.
  */
 function disable_comment_menu() {
-	if ( 0 < array_sum( wp_count_comments() ) ) {
+	if ( 0 < array_sum( (array) wp_count_comments() ) ) {
 		return;
 	}
 	add_action(
