@@ -1,7 +1,7 @@
 {
-	"name": "wpinc-robor",
+	"name": "wpinc-alt",
 	"version": "0.1.0",
-	"description": "A Library of WordPress for Robust Websites",
+	"description": "A Library of WordPress for Altering Configuration",
 	"author": "Takuto Yanagida",
 	"main": "gulpfile.js",
 	"scripts": {
@@ -9,13 +9,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/takty/wpinc-robor.git"
+		"url": "git+https://github.com/takty/wpinc-alt.git"
 	},
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/takty/wpinc-robor/issues"
+		"url": "https://github.com/takty/wpinc-alt/issues"
 	},
-	"homepage": "https://github.com/takty/wpinc-robor#readme",
+	"homepage": "https://github.com/takty/wpinc-alt#readme",
 	"browserslist": [
 		"> 1%",
 		"last 2 versions",

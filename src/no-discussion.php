@@ -2,12 +2,12 @@
 /**
  * No Discussion - Disabling Comment and Trackback Functions
  *
- * @package Wpinc Robor
+ * @package Wpinc Alt
  * @author Takuto Yanagida
  * @version 2022-01-10
  */
 
-namespace wpinc\robor;
+namespace wpinc\alt;
 
 /**
  * Disable comment supports.

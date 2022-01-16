@@ -2,12 +2,12 @@
 /**
  * Remove Default 'post' Post Type.
  *
- * @package Wpinc Robor
+ * @package Wpinc Alt
  * @author Takuto Yanagida
  * @version 2022-01-08
  */
 
-namespace wpinc\robor;
+namespace wpinc\alt;
 
 /**
  * Remove UIs for default 'post' post type.

@@ -2,12 +2,12 @@
 /**
  * Customizing Admin Bar and Side Menu.
  *
- * @package Wpinc Robor
+ * @package Wpinc Alt
  * @author Takuto Yanagida
  * @version 2022-01-08
  */
 
-namespace wpinc\robor;
+namespace wpinc\alt;
 
 /**
  * Remove WordPress logo icon.

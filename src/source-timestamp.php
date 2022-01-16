@@ -2,19 +2,19 @@
 /**
  * Adding Timestamp to Ensure Updated Styles and Scripts Are Loaded.
  *
- * @package Wpinc Robor
+ * @package Wpinc Alt
  * @author Takuto Yanagida
  * @version 2022-01-10
  */
 
-namespace wpinc\robor;
+namespace wpinc\alt;
 
 /**
  * Add timestamps to style and script sources.
  */
 function add_timestamp_to_source() {
-	add_filter( 'style_loader_src', '\wpinc\robor\_cb_loader_src__add_timestamp' );
-	add_filter( 'script_loader_src', '\wpinc\robor\_cb_loader_src__add_timestamp' );
+	add_filter( 'style_loader_src', '\wpinc\alt\_cb_loader_src__add_timestamp' );
+	add_filter( 'script_loader_src', '\wpinc\alt\_cb_loader_src__add_timestamp' );
 }
 
 /**

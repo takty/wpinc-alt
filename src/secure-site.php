@@ -2,12 +2,12 @@
 /**
  * Secure Site - Disabling Unnecessary Functions
  *
- * @package Wpinc Robor
+ * @package Wpinc Alt
  * @author Takuto Yanagida
  * @version 2022-01-08
  */
 
-namespace wpinc\robor;
+namespace wpinc\alt;
 
 /**
  * Disable REST API for specific routes.

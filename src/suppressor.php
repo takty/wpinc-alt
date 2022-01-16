@@ -2,12 +2,12 @@
 /**
  * Suppressor - Suppressing Unnecessary Outputs.
  *
- * @package Wpinc Robor
+ * @package Wpinc Alt
  * @author Takuto Yanagida
  * @version 2022-01-10
  */
 
-namespace wpinc\robor;
+namespace wpinc\alt;
 
 /**
  * Suppress output for head meta.
@@ -66,10 +66,10 @@ function suppress_emoji_function() {
  * Suppress the output of versions for scripts and styles.
  */
 function suppress_version_output() {
-	add_action( 'wp_default_scripts', '\wpinc\robor\_cb_wp_default__suppress_version_output' );
-	add_action( 'wp_default_styles', '\wpinc\robor\_cb_wp_default__suppress_version_output' );
-	add_filter( 'style_loader_src', '\wpinc\robor\_cb_loader_src__suppress_version_output' );
-	add_filter( 'script_loader_src', '\wpinc\robor\_cb_loader_src__suppress_version_output' );
+	add_action( 'wp_default_scripts', '\wpinc\alt\_cb_wp_default__suppress_version_output' );
+	add_action( 'wp_default_styles', '\wpinc\alt\_cb_wp_default__suppress_version_output' );
+	add_filter( 'style_loader_src', '\wpinc\alt\_cb_loader_src__suppress_version_output' );
+	add_filter( 'script_loader_src', '\wpinc\alt\_cb_loader_src__suppress_version_output' );
 }
 
 /**
