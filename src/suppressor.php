@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-10
+ * @version 2022-01-16
  */
 
 namespace wpinc\alt;
@@ -88,8 +88,8 @@ function _cb_wp_default__suppress_version_output( object $inst ) {
  *
  * @access private
  *
- * @param ?string $src The source URL of the enqueued style.
- * @return ?string Source.
+ * @param string|null $src The source URL of the enqueued style.
+ * @return string|null Source.
  */
 function _cb_loader_src__suppress_version_output( ?string $src ): ?string {
 	if ( false !== strpos( $src, 'ver=' ) ) {
