@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-08
+ * @version 2022-01-16
  */
 
 namespace wpinc\alt;
@@ -12,7 +12,7 @@ namespace wpinc\alt;
 /**
  * Remove WordPress logo icon.
  */
-function remove_wp_logo() {
+function remove_wp_logo(): void {
 	add_action(
 		'admin_bar_menu',
 		function ( $wp_admin_bar ) {
@@ -25,7 +25,7 @@ function remove_wp_logo() {
 /**
  * Remove the customize menu.
  */
-function remove_customize_menu() {
+function remove_customize_menu(): void {
 	add_action(
 		'admin_bar_menu',
 		function ( $wp_admin_bar ) {
@@ -59,7 +59,7 @@ function remove_customize_menu() {
 /**
  * Customize the side menu order.
  */
-function customize_side_menu_order() {
+function customize_side_menu_order(): void {
 	add_action(
 		'admin_menu',
 		function () {

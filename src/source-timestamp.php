@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-10
+ * @version 2022-01-16
  */
 
 namespace wpinc\alt;
@@ -12,7 +12,7 @@ namespace wpinc\alt;
 /**
  * Add timestamps to style and script sources.
  */
-function add_timestamp_to_source() {
+function add_timestamp_to_source(): void {
 	add_filter( 'style_loader_src', '\wpinc\alt\_cb_loader_src__add_timestamp' );
 	add_filter( 'script_loader_src', '\wpinc\alt\_cb_loader_src__add_timestamp' );
 }
@@ -24,7 +24,7 @@ function add_timestamp_to_source() {
  *
  * @param string $src The source URL of the enqueued style and script.
  */
-function _cb_loader_src__add_timestamp( $src ) {
+function _cb_loader_src__add_timestamp( string $src ): string {
 	if ( strpos( $src, get_template_directory_uri() ) === false ) {
 		return $src;
 	}

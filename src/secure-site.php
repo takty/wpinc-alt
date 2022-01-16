@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-08
+ * @version 2022-01-16
  */
 
 namespace wpinc\alt;
@@ -14,7 +14,7 @@ namespace wpinc\alt;
  *
  * @param string[] $permitted_routes Permitted routes. For example, array( 'oembed', 'contact-form-7' ).
  */
-function disable_rest_api( array $permitted_routes = array() ) {
+function disable_rest_api( array $permitted_routes = array() ): void {
 	add_filter(
 		'rest_pre_dispatch',
 		function ( $result, $wp_rest_server, $request ) use ( $permitted_routes ) {
@@ -39,7 +39,7 @@ function disable_rest_api( array $permitted_routes = array() ) {
 /**
  * Shutdown REST API completely.
  */
-function shutdown_rest_api() {
+function shutdown_rest_api(): void {
 	remove_action( 'init', 'rest_api_init' );
 	remove_action( 'rest_api_init', 'rest_api_default_filters', 10, 1 );
 	remove_action( 'rest_api_init', 'register_initial_settings', 10 );
@@ -65,7 +65,7 @@ function shutdown_rest_api() {
 /**
  * Disallow file edit.
  */
-function disallow_file_edit() {
+function disallow_file_edit(): void {
 	if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
 		define( 'DISALLOW_FILE_EDIT', true );
 	}
@@ -74,14 +74,14 @@ function disallow_file_edit() {
 /**
  * Disable XML RPC.
  */
-function disable_xml_rpc() {
+function disable_xml_rpc(): void {
 	add_filter( 'xmlrpc_enabled', '__return_false' );
 }
 
 /**
  * Disable embed feature.
  */
-function disable_embed() {
+function disable_embed(): void {
 	add_filter( 'embed_oembed_discover', '__return_false' );
 	add_filter(
 		'embed_oembed_html',
@@ -143,7 +143,7 @@ function disable_embed() {
 /**
  * Disable author pages.
  */
-function disable_author_page() {
+function disable_author_page(): void {
 	add_filter( 'author_rewrite_rules', '__return_empty_array' );
 	add_filter( 'author_link', '__return_empty_string' );
 
@@ -188,7 +188,7 @@ function disable_author_page() {
 /**
  * Set membership options secure.
  */
-function set_membership_option() {
+function set_membership_option(): void {
 	update_option( 'users_can_register', 0 );
 	update_option( 'default_role', 'subscriber' );
 }

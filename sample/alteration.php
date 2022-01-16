@@ -4,7 +4,7 @@
  *
  * @package Wpinc
  * @author Takuto Yanagida
- * @version 2022-01-10
+ * @version 2022-01-16
  */
 
 namespace st;
@@ -26,7 +26,7 @@ require_once __DIR__ . '/alt/suppressor.php';
  *     @type bool     'do_remove_feed_links' Whether feed links are removed.
  * }
  */
-function customize_by_default( array $args = array() ) {
+function customize_by_default( array $args = array() ): void {
 	$args += array(
 		'permitted_routes'     => array(),
 		'do_remove_feed_links' => true,

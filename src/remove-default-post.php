@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-08
+ * @version 2022-01-16
  */
 
 namespace wpinc\alt;
@@ -12,7 +12,7 @@ namespace wpinc\alt;
 /**
  * Remove UIs for default 'post' post type.
  */
-function remove_default_post_ui() {
+function remove_default_post_ui(): void {
 	add_action(
 		'admin_bar_menu',
 		function ( $wp_admin_bar ) {
@@ -34,7 +34,7 @@ function remove_default_post_ui() {
 /**
  * Remove default 'post' post type when no posts.
  */
-function remove_default_post_when_empty() {
+function remove_default_post_when_empty(): void {
 	$counts = wp_count_posts();
 	$sum    = 0;
 	foreach ( $counts as $key => $val ) {
@@ -55,7 +55,7 @@ function remove_default_post_when_empty() {
  *
  * @access private
  */
-function _hide_post_type_post() {
+function _hide_post_type_post(): void {
 	unregister_taxonomy_for_object_type( 'category', 'post' );
 	unregister_taxonomy_for_object_type( 'post_tag', 'post' );
 	global $wp_post_types;
@@ -73,20 +73,20 @@ function _hide_post_type_post() {
  *
  * @access private
  *
- * @param string $tax Taxonomy.
+ * @param string $tx Taxonomy.
  */
-function _hide_taxonomy( $tax ) {
-	$tax = get_taxonomy( $tax );
-	if ( ! empty( $tax->object_type ) ) {
+function _hide_taxonomy( $tx ): void {
+	$tx = get_taxonomy( $tx );
+	if ( ! empty( $tx->object_type ) ) {
 		return;
 	}
-	$tax->public             = false;
-	$tax->publicly_queryable = false;
-	$tax->show_admin_column  = false;
-	$tax->show_in_menu       = false;
-	$tax->show_in_nav_menus  = false;
-	$tax->show_in_quick_edit = false;
-	$tax->show_in_rest       = false;
-	$tax->show_tagcloud      = false;
-	$tax->show_ui            = false;
+	$tx->public             = false;
+	$tx->publicly_queryable = false;
+	$tx->show_admin_column  = false;
+	$tx->show_in_menu       = false;
+	$tx->show_in_nav_menus  = false;
+	$tx->show_in_quick_edit = false;
+	$tx->show_in_rest       = false;
+	$tx->show_tagcloud      = false;
+	$tx->show_ui            = false;
 }

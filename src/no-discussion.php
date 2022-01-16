@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-10
+ * @version 2022-01-16
  */
 
 namespace wpinc\alt;
@@ -12,7 +12,7 @@ namespace wpinc\alt;
 /**
  * Disable comment supports.
  */
-function disable_comment_support() {
+function disable_comment_support(): void {
 	update_option( 'default_comment_status', 0 );
 
 	remove_post_type_support( 'post', 'comments' );
@@ -39,7 +39,7 @@ function disable_comment_support() {
 /**
  * Disable comment feeds.
  */
-function disable_comment_feed() {
+function disable_comment_feed(): void {
 	add_filter( 'feed_links_show_comments_feed', '__return_false' );
 	add_filter( 'post_comments_feed_link_html', '__return_empty_string' );
 	add_filter( 'post_comments_feed_link', '__return_empty_string' );
@@ -75,7 +75,7 @@ function disable_comment_feed() {
 /**
  * Disable comment menus.
  */
-function disable_comment_menu() {
+function disable_comment_menu(): void {
 	if ( 0 < array_sum( (array) wp_count_comments() ) ) {
 		return;
 	}
@@ -101,7 +101,7 @@ function disable_comment_menu() {
 /**
  * Disable pingback function.
  */
-function disable_pingback() {
+function disable_pingback(): void {
 	update_option( 'default_pingback_flag', 0 );
 	update_option( 'default_ping_status', 0 );
 
@@ -141,7 +141,7 @@ function disable_pingback() {
 /**
  * Disable trackback function.
  */
-function disable_trackback() {
+function disable_trackback(): void {
 	remove_post_type_support( 'post', 'trackbacks' );
 	remove_post_type_support( 'page', 'trackbacks' );
 
