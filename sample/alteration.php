@@ -2,12 +2,12 @@
 /**
  * Default Customization
  *
- * @package Wpinc
+ * @package Sample
  * @author Takuto Yanagida
  * @version 2022-01-26
  */
 
-namespace st;
+namespace sample;
 
 require_once __DIR__ . '/alt/custom-admin.php';
 require_once __DIR__ . '/alt/no-discussion.php';
