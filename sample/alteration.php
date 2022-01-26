@@ -4,13 +4,14 @@
  *
  * @package Wpinc
  * @author Takuto Yanagida
- * @version 2022-01-16
+ * @version 2022-01-26
  */
 
 namespace st;
 
 require_once __DIR__ . '/alt/custom-admin.php';
 require_once __DIR__ . '/alt/no-discussion.php';
+require_once __DIR__ . '/alt/pseudo-html.php';
 require_once __DIR__ . '/alt/remove-default-post.php';
 require_once __DIR__ . '/alt/secure-site.php';
 require_once __DIR__ . '/alt/source-timestamp.php';
@@ -74,4 +75,15 @@ function customize_by_default( array $args = array() ): void {
 	\wpinc\alt\suppress_version_output();
 	\wpinc\alt\suppress_loginout_link_output();
 	\wpinc\alt\suppress_robots_txt_output();
+}
+
+
+// -----------------------------------------------------------------------------
+
+
+/**
+ * Enables pseudo HTML.
+ */
+function enable_pseudo_html() {
+	\wpinc\alt\enable_pseudo_html();
 }
