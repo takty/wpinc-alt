@@ -4,13 +4,13 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-16
+ * @version 2022-01-31
  */
 
 namespace wpinc\alt;
 
 /**
- * Remove WordPress logo icon.
+ * Removes WordPress logo icon.
  */
 function remove_wp_logo(): void {
 	add_action(
@@ -23,7 +23,7 @@ function remove_wp_logo(): void {
 }
 
 /**
- * Remove the customize menu.
+ * Removes the customize menu.
  */
 function remove_customize_menu(): void {
 	add_action(
@@ -33,31 +33,33 @@ function remove_customize_menu(): void {
 		},
 		300
 	);
-	add_action(
-		'admin_menu',
-		function () {
-			global $submenu;
-			if ( isset( $submenu['themes.php'] ) ) {
-				$customize_menu_index = -1;
-				foreach ( $submenu['themes.php'] as $index => $menu_item ) {
-					foreach ( $menu_item as $data ) {
-						if ( strpos( $data, 'customize' ) === 0 ) {
-							$customize_menu_index = $index;
-							break;
-						}
-					}
-					if ( -1 !== $customize_menu_index ) {
-						break;
-					}
-				}
-				unset( $submenu['themes.php'][ $customize_menu_index ] );
-			}
-		}
-	);
+	add_action( 'admin_menu', '\wpinc\alt\_cb_admin_menu' );
 }
 
 /**
- * Customize the side menu order.
+ * Callback function for 'admin_menu' action.
+ */
+function _cb_admin_menu(): void {
+	global $submenu;
+	if ( isset( $submenu['themes.php'] ) ) {
+		$customize_menu_index = -1;
+		foreach ( $submenu['themes.php'] as $index => $menu_item ) {
+			foreach ( $menu_item as $data ) {
+				if ( strpos( $data, 'customize' ) === 0 ) {
+					$customize_menu_index = $index;
+					break;
+				}
+			}
+			if ( -1 !== $customize_menu_index ) {
+				break;
+			}
+		}
+		unset( $submenu['themes.php'][ $customize_menu_index ] );
+	}
+}
+
+/**
+ * Customizes the side menu order.
  */
 function customize_side_menu_order(): void {
 	add_action(
