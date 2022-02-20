@@ -4,7 +4,7 @@
  *
  * @package Sample
  * @author Takuto Yanagida
- * @version 2022-01-26
+ * @version 2022-02-20
  */
 
 namespace sample;
@@ -29,7 +29,6 @@ require_once __DIR__ . '/alt/suppressor.php';
  */
 function customize_by_default( array $args = array() ): void {
 	$args += array(
-		'permitted_routes'     => array(),
 		'do_remove_feed_links' => true,
 	);
 
@@ -56,7 +55,7 @@ function customize_by_default( array $args = array() ): void {
 	}
 
 	// secure-site.
-	\wpinc\alt\disable_rest_api( $args['permitted_routes'] );
+	\wpinc\alt\disable_rest_api_without_authentication();
 	if ( is_admin() ) {
 		\wpinc\alt\disallow_file_edit();
 	}
