@@ -4,7 +4,7 @@
  *
  * @package Sample
  * @author Takuto Yanagida
- * @version 2022-02-20
+ * @version 2022-03-04
  */
 
 namespace sample;
@@ -30,6 +30,7 @@ require_once __DIR__ . '/alt/suppressor.php';
 function customize_by_default( array $args = array() ): void {
 	$args += array(
 		'do_remove_feed_links' => true,
+		'permitted_route'      => array( 'oembed', 'contact-form-7' ),
 	);
 
 	if ( is_admin_bar_showing() ) {
@@ -55,7 +56,7 @@ function customize_by_default( array $args = array() ): void {
 	}
 
 	// secure-site.
-	\wpinc\alt\disable_rest_api_without_authentication();
+	\wpinc\alt\disable_rest_api_without_permission( $args['permitted_route'] );
 	if ( is_admin() ) {
 		\wpinc\alt\disallow_file_edit();
 	}
