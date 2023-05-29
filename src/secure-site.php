@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-09-09
+ * @version 2023-05-29
  */
 
 namespace wpinc\alt;
@@ -201,6 +201,16 @@ function disable_author_page(): void {
 		},
 		10,
 		3
+	);
+	// Remove author name from oEmbed response data.
+	add_filter(
+		'oembed_response_data',
+		function ( $data ) {
+			$data['author_name'] = '';
+			// 'author_url' becomes an empty string by 'author_link' filter added above.
+			return $data;
+		},
+		10
 	);
 }
 
