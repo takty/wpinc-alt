@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-05-29
+ * @version 2023-08-30
  */
 
 namespace wpinc\alt;
@@ -27,7 +27,7 @@ function disable_rest_api_without_permission( array $permitted_routes = array() 
 					return $result;
 				}
 			}
-			return new \WP_Error( 'rest_disabled', array( 'status' => rest_authorization_required_code() ) );
+			return new \WP_Error( 'rest_disabled', __( 'REST API is disabled.' ) . ' (status: ' . rest_authorization_required_code() . ')' );
 		},
 		10,
 		3
@@ -44,7 +44,7 @@ function disable_rest_api_without_authentication(): void {
 			if ( true === $result || is_wp_error( $result ) || is_user_logged_in() ) {
 				return $result;
 			}
-			return new \WP_Error( 'rest_disabled', array( 'status' => rest_authorization_required_code() ) );
+			return new \WP_Error( 'rest_disabled', __( 'REST API is disabled.' ) . ' (status: ' . rest_authorization_required_code() . ')' );
 		}
 	);
 }
@@ -54,7 +54,7 @@ function disable_rest_api_without_authentication(): void {
  */
 function shutdown_rest_api(): void {
 	remove_action( 'init', 'rest_api_init' );
-	remove_action( 'rest_api_init', 'rest_api_default_filters', 10, 1 );
+	remove_action( 'rest_api_init', 'rest_api_default_filters', 10 );
 	remove_action( 'rest_api_init', 'register_initial_settings', 10 );
 	remove_action( 'rest_api_init', 'create_initial_rest_routes', 99 );
 	remove_action( 'parse_request', 'rest_api_loaded' );
@@ -114,7 +114,7 @@ function disable_embed( array $allowed_urls = array() ): void {
 	add_filter( 'embed_oembed_discover', '__return_false' );
 	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
 	remove_action( 'wp_head', 'wp_oembed_add_host_js' );
-	remove_filter( 'pre_oembed_result', 'wp_filter_pre_oembed_result', 10, 3 );
+	remove_filter( 'pre_oembed_result', 'wp_filter_pre_oembed_result', 10 );
 
 	add_filter(
 		'rest_endpoints',
@@ -167,7 +167,7 @@ function disable_author_page(): void {
 	add_filter( 'author_rewrite_rules', '__return_empty_array' );
 	add_filter( 'author_link', '__return_empty_string' );
 
-	add_filter(
+	add_action(
 		'parse_query',
 		function ( $query ) {
 			if ( ! is_admin() && is_author() ) {

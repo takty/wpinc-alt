@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-16
+ * @version 2023-09-01
  */
 
 namespace wpinc\alt;
@@ -37,7 +37,7 @@ function remove_default_post_ui(): void {
 function remove_default_post_when_empty(): void {
 	$counts = wp_count_posts();
 	$sum    = 0;
-	foreach ( $counts as $key => $val ) {
+	foreach ( (array) $counts as $key => $val ) {
 		if ( 'auto-draft' === $key ) {
 			continue;
 		}
@@ -77,7 +77,7 @@ function _hide_post_type_post(): void {
  */
 function _hide_taxonomy( $tx ): void {
 	$tx = get_taxonomy( $tx );
-	if ( ! empty( $tx->object_type ) ) {
+	if ( ! $tx || ! empty( $tx->object_type ) ) {
 		return;
 	}
 	$tx->public             = false;

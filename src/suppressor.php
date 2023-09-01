@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-02-21
+ * @version 2023-09-01
  */
 
 namespace wpinc\alt;
@@ -77,10 +77,10 @@ function suppress_version_output(): void {
  *
  * @access private
  *
- * @param object $inst WP_Scripts instance (passed by reference).
+ * @param \WP_Scripts|object $wp_scripts WP_Scripts instance (passed by reference).
  */
-function _cb_wp_default__suppress_version_output( object $inst ): void {
-	$inst->default_version = '';
+function _cb_wp_default__suppress_version_output( &$wp_scripts ): void {
+	$wp_scripts->default_version = '';
 }
 
 /**
@@ -88,10 +88,10 @@ function _cb_wp_default__suppress_version_output( object $inst ): void {
  *
  * @access private
  *
- * @param string|null $src The source URL of the enqueued style.
- * @return string|null Source.
+ * @param string $src The source URL of the enqueued style.
+ * @return string Source.
  */
-function _cb_loader_src__suppress_version_output( ?string $src ): ?string {
+function _cb_loader_src__suppress_version_output( string $src ): string {
 	if ( false !== strpos( $src, 'ver=' ) ) {
 		return remove_query_arg( 'ver', $src );
 	}

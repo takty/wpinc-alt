@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-16
+ * @version 2023-08-30
  */
 
 namespace wpinc\alt;
@@ -58,7 +58,7 @@ function disable_comment_feed(): void {
 		'do_feed_rss2',
 		function ( $for_comments ) {
 			if ( ! $for_comments ) {
-				load_template( ABSPATH . WPINC . '/feed-rss2.php' );
+				load_template( ABSPATH . WPINC . '/feed-rss2.php' );  // @phpstan-ignore-line
 			}
 		}
 	);
@@ -66,7 +66,7 @@ function disable_comment_feed(): void {
 		'do_feed_atom',
 		function ( $for_comments ) {
 			if ( ! $for_comments ) {
-				load_template( ABSPATH . WPINC . '/feed-atom.php' );
+				load_template( ABSPATH . WPINC . '/feed-atom.php' );  // @phpstan-ignore-line
 			}
 		}
 	);
@@ -108,7 +108,7 @@ function disable_pingback(): void {
 	remove_post_type_support( 'post', 'trackbacks' );
 	remove_post_type_support( 'page', 'trackbacks' );
 
-	remove_action( 'do_all_pings', 'do_all_pingbacks', 10, 0 );
+	remove_action( 'do_all_pings', 'do_all_pingbacks', 10 );
 
 	add_filter( 'pings_open', '__return_false' );
 	add_filter( 'pingback_ping_source_uri', '__return_empty_string' );
@@ -145,7 +145,7 @@ function disable_trackback(): void {
 	remove_post_type_support( 'post', 'trackbacks' );
 	remove_post_type_support( 'page', 'trackbacks' );
 
-	remove_action( 'do_all_pings', 'do_all_trackbacks', 10, 0 );
+	remove_action( 'do_all_pings', 'do_all_trackbacks', 10 );
 
 	add_action(
 		'template_redirect',

@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-10-28
+ * @version 2023-08-30
  */
 
 namespace wpinc\alt;
@@ -14,7 +14,7 @@ require_once __DIR__ . '/assets/url.php';
 /**
  * Enables pseudo HTML.
  */
-function enable_pseudo_html() {
+function enable_pseudo_html(): void {
 	global $wp_rewrite;
 	$wp_rewrite->use_trailing_slashes = false;
 	$wp_rewrite->page_structure       = $wp_rewrite->root . '%pagename%.html';

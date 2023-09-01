@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-03-07
+ * @version 2023-08-30
  */
 
 namespace wpinc\alt;
@@ -23,16 +23,27 @@ function add_timestamp_to_source(): void {
  * @access private
  *
  * @param string $src The source URL of the enqueued style and script.
+ * @return string Source.
  */
 function _cb_loader_src__add_timestamp( string $src ): string {
 	if ( strpos( $src, get_template_directory_uri() ) === false ) {
 		return $src;
 	}
-	$removed_src   = strtok( $src, '?' );
+	$removed_src = strtok( $src, '?' );
+	if ( false === $removed_src ) {
+		$removed_src = $src;
+	}
 	$path          = wp_normalize_path( ABSPATH );
 	$resource_file = str_replace( trailingslashit( site_url() ), trailingslashit( $path ), $removed_src );
 	$resource_file = realpath( $resource_file );
-	$fts           = gmdate( 'Ymdhis', filemtime( $resource_file ) );
-	$hash          = hash( 'crc32b', $resource_file . $fts );
+	if ( false === $resource_file ) {
+		return $src;
+	}
+	$fmt = filemtime( $resource_file );
+	if ( false === $fmt ) {
+		return $src;
+	}
+	$fts  = gmdate( 'Ymdhis', $fmt );
+	$hash = hash( 'crc32b', $resource_file . $fts );
 	return add_query_arg( 'v', $hash, $src );
 }
