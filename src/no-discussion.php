@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-08-30
+ * @version 2023-09-20
  */
 
 namespace wpinc\alt;
@@ -58,7 +58,7 @@ function disable_comment_feed(): void {
 		'do_feed_rss2',
 		function ( $for_comments ) {
 			if ( ! $for_comments ) {
-				load_template( ABSPATH . WPINC . '/feed-rss2.php' );  // @phpstan-ignore-line
+				load_template( ABSPATH . 'wp-includes/feed-rss2.php' );  // @phpstan-ignore-line
 			}
 		}
 	);
@@ -66,7 +66,7 @@ function disable_comment_feed(): void {
 		'do_feed_atom',
 		function ( $for_comments ) {
 			if ( ! $for_comments ) {
-				load_template( ABSPATH . WPINC . '/feed-atom.php' );  // @phpstan-ignore-line
+				load_template( ABSPATH . 'wp-includes/feed-atom.php' );  // @phpstan-ignore-line
 			}
 		}
 	);
