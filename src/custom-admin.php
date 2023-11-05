@@ -4,8 +4,10 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2022-01-31
+ * @version 2023-11-02
  */
+
+declare(strict_types=1);
 
 namespace wpinc\alt;
 
@@ -33,7 +35,7 @@ function remove_customize_menu(): void {
 		},
 		300
 	);
-	add_action( 'admin_menu', '\wpinc\alt\_cb_admin_menu' );
+	add_action( 'admin_menu', '\wpinc\alt\_cb_admin_menu', 10, 0 );
 }
 
 /**

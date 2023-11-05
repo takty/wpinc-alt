@@ -4,8 +4,10 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-08-30
+ * @version 2023-11-02
  */
+
+declare(strict_types=1);
 
 namespace wpinc\alt;
 
@@ -17,7 +19,7 @@ namespace wpinc\alt;
 function disable_rest_api_without_permission( array $permitted_routes = array() ): void {
 	add_filter(
 		'rest_pre_dispatch',
-		function ( $result, $wp_rest_server, $request ) use ( $permitted_routes ) {
+		function ( $result, $_wp_rest_server, $request ) use ( $permitted_routes ) {
 			if ( is_user_logged_in() ) {
 				return $result;
 			}
@@ -61,7 +63,7 @@ function shutdown_rest_api(): void {
 	add_filter(
 		'rewrite_rules_array',
 		function ( $rules ) {
-			foreach ( $rules as $rule => $rewrite ) {
+			foreach ( $rules as $rule => $_rewrite ) {
 				if ( preg_match( '/wp-json/', $rule ) ) {
 					unset( $rules[ $rule ] );
 				}
@@ -86,6 +88,8 @@ function disallow_file_edit(): void {
 
 /**
  * Disable XML RPC.
+ *
+ * @psalm-suppress InvalidScalarArgument
  */
 function disable_xml_rpc(): void {
 	add_filter( 'xmlrpc_enabled', '__return_false' );
@@ -94,12 +98,15 @@ function disable_xml_rpc(): void {
 /**
  * Disable embed feature.
  *
+ * @global \WP_Embed $wp_embed
+ * @psalm-suppress RedundantCondition, InvalidScalarArgument, InvalidArgument
+ *
  * @param string[] $allowed_urls Allowed URLs.
  */
 function disable_embed( array $allowed_urls = array() ): void {
 	add_filter(
 		'embed_oembed_html',
-		function ( $cached_html, $url, $attr, $post_id ) use ( $allowed_urls ) {
+		function ( $cached_html, $url ) use ( $allowed_urls ) {
 			foreach ( $allowed_urls as $au ) {
 				if ( 0 === strpos( $url, $au ) ) {
 					return $cached_html;
@@ -109,7 +116,7 @@ function disable_embed( array $allowed_urls = array() ): void {
 			return $wp_embed->maybe_make_link( $url );
 		},
 		10,
-		4
+		2
 	);
 	add_filter( 'embed_oembed_discover', '__return_false' );
 	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
@@ -121,7 +128,9 @@ function disable_embed( array $allowed_urls = array() ): void {
 		function ( $endpoints ) {
 			unset( $endpoints['/oembed/1.0/embed'] );
 			return $endpoints;
-		}
+		},
+		10,
+		1
 	);
 	add_filter(
 		'oembed_response_data',
@@ -130,7 +139,9 @@ function disable_embed( array $allowed_urls = array() ): void {
 				return false;
 			}
 			return $data;
-		}
+		},
+		10,
+		1
 	);
 	add_filter(
 		'rewrite_rules_array',
@@ -141,7 +152,9 @@ function disable_embed( array $allowed_urls = array() ): void {
 				}
 			}
 			return $rules;
-		}
+		},
+		10,
+		1
 	);
 	add_action(
 		'wp_default_scripts',
@@ -152,7 +165,9 @@ function disable_embed( array $allowed_urls = array() ): void {
 					array( 'wp-embed' )
 				);
 			}
-		}
+		},
+		10,
+		1
 	);
 }
 
@@ -162,6 +177,8 @@ function disable_embed( array $allowed_urls = array() ): void {
 
 /**
  * Disable author pages.
+ *
+ * @psalm-suppress HookNotFound, InvalidScalarArgument, InvalidArgument
  */
 function disable_author_page(): void {
 	add_filter( 'author_rewrite_rules', '__return_empty_array' );
@@ -169,7 +186,7 @@ function disable_author_page(): void {
 
 	add_action(
 		'parse_query',
-		function ( $query ) {
+		function ( \WP_Query $query ) {
 			if ( ! is_admin() && is_author() ) {
 				$query->set_404();
 				status_header( 404 );
@@ -180,27 +197,26 @@ function disable_author_page(): void {
 	// Remove authors from feeds.
 	add_filter(
 		'the_author',
-		function ( $author ) {
+		function ( string $author ): string {
 			return is_feed() ? get_bloginfo_rss( 'name' ) : $author;
 		}
 	);
 	add_filter(
 		'the_author_url',
-		function ( $author_meta ) {
+		function ( string $author_meta ): string {
 			return is_feed() ? home_url() : $author_meta;
 		}
 	);
 	// Remove information of authors from REST response.
 	add_filter(
 		'rest_prepare_user',
-		function ( $response, $user, $request ) {
+		function ( \WP_REST_Response $response ) {
 			if ( is_user_logged_in() ) {
 				return $response;
 			}
 			return rest_ensure_response( array() );
 		},
-		10,
-		3
+		10
 	);
 	// Remove author name from oEmbed response data.
 	add_filter(

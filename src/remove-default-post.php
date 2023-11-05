@@ -4,8 +4,10 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-09-01
+ * @version 2023-11-06
  */
+
+declare(strict_types=1);
 
 namespace wpinc\alt;
 
@@ -54,6 +56,7 @@ function remove_default_post_when_empty(): void {
  * Hide default 'post' post type.
  *
  * @access private
+ * @global \WP_Post_Type[] $wp_post_types
  */
 function _hide_post_type_post(): void {
 	unregister_taxonomy_for_object_type( 'category', 'post' );

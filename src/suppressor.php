@@ -4,13 +4,17 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-09-01
+ * @version 2023-11-02
  */
+
+declare(strict_types=1);
 
 namespace wpinc\alt;
 
 /**
  * Suppress output for head meta.
+ *
+ * @psalm-suppress InvalidScalarArgument
  *
  * @param bool $do_remove_feed_link (Optional) Whether feed links are removed.
  */
@@ -80,7 +84,7 @@ function suppress_version_output(): void {
  * @param \WP_Scripts|object $wp_scripts WP_Scripts instance (passed by reference).
  */
 function _cb_wp_default__suppress_version_output( &$wp_scripts ): void {
-	$wp_scripts->default_version = '';
+	$wp_scripts->default_version = '';  // @phpstan-ignore-line
 }
 
 /**
@@ -104,6 +108,8 @@ function _cb_loader_src__suppress_version_output( string $src ): string {
 
 /**
  * Suppress the output of log in/out link.
+ *
+ * @psalm-suppress InvalidScalarArgument
  */
 function suppress_loginout_link_output(): void {
 	add_filter( 'loginout', '__return_empty_string' );
@@ -116,7 +122,7 @@ function suppress_robots_txt_output(): void {
 	add_filter(
 		'rewrite_rules_array',
 		function ( $rules ) {
-			foreach ( $rules as $rule => $rewrite ) {
+			foreach ( $rules as $rule => $_rewrite ) {
 				if ( preg_match( '/robots\\.txt\$/', $rule ) ) {
 					unset( $rules[ $rule ] );
 				}

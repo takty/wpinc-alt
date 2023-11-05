@@ -4,8 +4,10 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-08-30
+ * @version 2023-11-04
  */
+
+declare(strict_types=1);
 
 namespace wpinc\alt;
 
@@ -13,6 +15,8 @@ require_once __DIR__ . '/assets/url.php';
 
 /**
  * Enables pseudo HTML.
+ *
+ * @global \WP_Rewrite $wp_rewrite
  */
 function enable_pseudo_html(): void {
 	global $wp_rewrite;
@@ -21,7 +25,7 @@ function enable_pseudo_html(): void {
 
 	add_filter(
 		'home_url',
-		function ( $url, $path, $orig_scheme, $blog_id ) {
+		function ( $url, $path ) {
 			if ( empty( $path ) || '/' === $path ) {
 				return $url;
 			}
@@ -40,6 +44,6 @@ function enable_pseudo_html(): void {
 			return \wpinc\serialize_url( $pu );
 		},
 		10,
-		4
+		2
 	);
 }

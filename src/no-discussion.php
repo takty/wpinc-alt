@@ -4,13 +4,17 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-09-20
+ * @version 2023-11-02
  */
+
+declare(strict_types=1);
 
 namespace wpinc\alt;
 
 /**
  * Disable comment supports.
+ *
+ * @psalm-suppress InvalidScalarArgument
  */
 function disable_comment_support(): void {
 	update_option( 'default_comment_status', 0 );
@@ -38,6 +42,8 @@ function disable_comment_support(): void {
 
 /**
  * Disable comment feeds.
+ *
+ * @psalm-suppress InvalidScalarArgument
  */
 function disable_comment_feed(): void {
 	add_filter( 'feed_links_show_comments_feed', '__return_false' );
@@ -58,7 +64,7 @@ function disable_comment_feed(): void {
 		'do_feed_rss2',
 		function ( $for_comments ) {
 			if ( ! $for_comments ) {
-				load_template( ABSPATH . 'wp-includes/feed-rss2.php' );  // @phpstan-ignore-line
+				load_template( ABSPATH . 'wp-includes/feed-rss2.php' );
 			}
 		}
 	);
@@ -66,7 +72,7 @@ function disable_comment_feed(): void {
 		'do_feed_atom',
 		function ( $for_comments ) {
 			if ( ! $for_comments ) {
-				load_template( ABSPATH . 'wp-includes/feed-atom.php' );  // @phpstan-ignore-line
+				load_template( ABSPATH . 'wp-includes/feed-atom.php' );
 			}
 		}
 	);
@@ -100,6 +106,8 @@ function disable_comment_menu(): void {
 
 /**
  * Disable pingback function.
+ *
+ * @psalm-suppress InvalidScalarArgument
  */
 function disable_pingback(): void {
 	update_option( 'default_pingback_flag', 0 );
@@ -115,11 +123,11 @@ function disable_pingback(): void {
 
 	add_filter(
 		'site_url',
-		function ( $url, $path, $scheme, $blog_id ) {
+		function ( $url, $path ) {
 			return 'xmlrpc.php' === $path ? '' : $url;
 		},
 		10,
-		4
+		2
 	);
 	add_filter(
 		'xmlrpc_methods',
@@ -140,6 +148,8 @@ function disable_pingback(): void {
 
 /**
  * Disable trackback function.
+ *
+ * @global \WP_Query $wp_query
  */
 function disable_trackback(): void {
 	remove_post_type_support( 'post', 'trackbacks' );
@@ -150,8 +160,8 @@ function disable_trackback(): void {
 	add_action(
 		'template_redirect',
 		function () {
+			global $wp_query;
 			if ( is_trackback() ) {
-				global $wp_query;
 				$wp_query->set_404();
 				status_header( 404 );
 				nocache_headers();
