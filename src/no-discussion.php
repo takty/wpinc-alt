@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-11-02
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -13,8 +13,6 @@ namespace wpinc\alt;
 
 /**
  * Disable comment supports.
- *
- * @psalm-suppress InvalidScalarArgument
  */
 function disable_comment_support(): void {
 	update_option( 'default_comment_status', 0 );
@@ -22,9 +20,13 @@ function disable_comment_support(): void {
 	remove_post_type_support( 'post', 'comments' );
 	remove_post_type_support( 'page', 'comments' );
 
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'comments_open', '__return_false' );
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'comments_array', '__return_empty_array' );
+	/** @psalm-suppress InvalidArgument */  // phpcs:ignore
 	add_filter( 'comment_reply_link', '__return_false' );
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'comments_rewrite_rules', '__return_empty_array' );
 
 	add_filter(
@@ -42,12 +44,13 @@ function disable_comment_support(): void {
 
 /**
  * Disable comment feeds.
- *
- * @psalm-suppress InvalidScalarArgument
  */
 function disable_comment_feed(): void {
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'feed_links_show_comments_feed', '__return_false' );
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'post_comments_feed_link_html', '__return_empty_string' );
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'post_comments_feed_link', '__return_empty_string' );
 	add_filter(
 		'feed_link',
@@ -106,8 +109,6 @@ function disable_comment_menu(): void {
 
 /**
  * Disable pingback function.
- *
- * @psalm-suppress InvalidScalarArgument
  */
 function disable_pingback(): void {
 	update_option( 'default_pingback_flag', 0 );
@@ -118,7 +119,9 @@ function disable_pingback(): void {
 
 	remove_action( 'do_all_pings', 'do_all_pingbacks', 10 );
 
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'pings_open', '__return_false' );
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'pingback_ping_source_uri', '__return_empty_string' );
 
 	add_filter(
@@ -166,7 +169,9 @@ function disable_trackback(): void {
 				status_header( 404 );
 				nocache_headers();
 			}
-		}
+		},
+		10,
+		0
 	);
 	add_filter(
 		'rewrite_rules_array',

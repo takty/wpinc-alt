@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-11-04
+ * @version 2024-03-13
  */
 
 declare(strict_types=1);
@@ -26,7 +26,7 @@ function enable_pseudo_html(): void {
 	add_filter(
 		'home_url',
 		function ( $url, $path ) {
-			if ( empty( $path ) || '/' === $path ) {
+			if ( '' === $path || '/' === $path ) {
 				return $url;
 			}
 			$pu = wp_parse_url( $url );

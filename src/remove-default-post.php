@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-11-06
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -25,7 +25,9 @@ function remove_default_post_ui(): void {
 		'wp_dashboard_setup',
 		function () {
 			remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' );
-		}
+		},
+		10,
+		0
 	);
 }
 

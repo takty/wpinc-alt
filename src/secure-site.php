@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-11-02
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -88,10 +88,9 @@ function disallow_file_edit(): void {
 
 /**
  * Disable XML RPC.
- *
- * @psalm-suppress InvalidScalarArgument
  */
 function disable_xml_rpc(): void {
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'xmlrpc_enabled', '__return_false' );
 }
 
@@ -99,7 +98,6 @@ function disable_xml_rpc(): void {
  * Disable embed feature.
  *
  * @global \WP_Embed $wp_embed
- * @psalm-suppress RedundantCondition, InvalidScalarArgument, InvalidArgument
  *
  * @param string[] $allowed_urls Allowed URLs.
  */
@@ -118,6 +116,7 @@ function disable_embed( array $allowed_urls = array() ): void {
 		10,
 		2
 	);
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'embed_oembed_discover', '__return_false' );
 	remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
 	remove_action( 'wp_head', 'wp_oembed_add_host_js' );
@@ -134,7 +133,9 @@ function disable_embed( array $allowed_urls = array() ): void {
 	);
 	add_filter(
 		'oembed_response_data',
+		/** @psalm-suppress MissingClosureParamType, InvalidArgument */  // phpcs:ignore
 		function ( $data ) {
+			/** @psalm-suppress RedundantCondition */  // phpcs:ignore
 			if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
 				return false;
 			}
@@ -159,7 +160,7 @@ function disable_embed( array $allowed_urls = array() ): void {
 	add_action(
 		'wp_default_scripts',
 		function ( $scripts ) {
-			if ( ! empty( $scripts->registered['wp-edit-post'] ) ) {
+			if ( isset( $scripts->registered['wp-edit-post'] ) ) {
 				$scripts->registered['wp-edit-post']->deps = array_diff(
 					$scripts->registered['wp-edit-post']->deps,
 					array( 'wp-embed' )
@@ -177,11 +178,11 @@ function disable_embed( array $allowed_urls = array() ): void {
 
 /**
  * Disable author pages.
- *
- * @psalm-suppress HookNotFound, InvalidScalarArgument, InvalidArgument
  */
 function disable_author_page(): void {
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'author_rewrite_rules', '__return_empty_array' );
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'author_link', '__return_empty_string' );
 
 	add_action(
@@ -214,7 +215,7 @@ function disable_author_page(): void {
 			if ( is_user_logged_in() ) {
 				return $response;
 			}
-			return rest_ensure_response( array() );
+			return new \WP_REST_Response( array() );
 		},
 		10
 	);

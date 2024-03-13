@@ -4,7 +4,7 @@
  *
  * @package Wpinc Alt
  * @author Takuto Yanagida
- * @version 2023-11-02
+ * @version 2024-03-12
  */
 
 declare(strict_types=1);
@@ -14,12 +14,11 @@ namespace wpinc\alt;
 /**
  * Suppress output for head meta.
  *
- * @psalm-suppress InvalidScalarArgument
- *
  * @param bool $do_remove_feed_link (Optional) Whether feed links are removed.
  */
 function suppress_head_meta_output( bool $do_remove_feed_link = true ): void {
 	if ( $do_remove_feed_link ) {
+		/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 		add_filter( 'feed_links_show_posts_feed', '__return_false' );
 		remove_action( 'wp_head', 'feed_links', 2 );
 		remove_action( 'wp_head', 'feed_links_extra', 3 );
@@ -108,10 +107,9 @@ function _cb_loader_src__suppress_version_output( string $src ): string {
 
 /**
  * Suppress the output of log in/out link.
- *
- * @psalm-suppress InvalidScalarArgument
  */
 function suppress_loginout_link_output(): void {
+	/** @psalm-suppress PossiblyInvalidArgument */  // phpcs:ignore
 	add_filter( 'loginout', '__return_empty_string' );
 }
 
